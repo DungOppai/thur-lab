@@ -12,9 +12,15 @@ VERSION = os.getenv("VERSION", "v1")
 
 @app.get("/")
 def index():
+    password_path = "/app/secrets/password"
+    db_password = "not-found"
+    if os.path.exists(password_path):
+        with open(password_path, "r") as f:
+            db_password = f.read().strip()
+
     if random.random() < ERROR_RATE:
-        return jsonify(error="injected", version=VERSION), 500
-    return jsonify(ok=True, version=VERSION)
+        return jsonify(error="injected", version=VERSION, password=db_password), 500
+    return jsonify(ok=True, version=VERSION, password=db_password)
 
 @app.get("/healthz")
 def healthz():

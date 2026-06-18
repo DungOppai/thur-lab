@@ -41,10 +41,18 @@ spec:
             path: /healthz
             port: 8080
           initialDelaySeconds: 3
+        volumeMounts:
+        - name: db-secret-vol
+          mountPath: /app/secrets
+          readOnly: true
         resources:
           limits:
             cpu: 200m
             memory: 128Mi
+      volumes:
+      - name: db-secret-vol
+        secret:
+          secretName: db-secret
   strategy:
     canary:
       analysis:
