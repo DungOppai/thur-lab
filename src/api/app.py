@@ -1,4 +1,5 @@
 # Lab 2 buổi chiều: Flask app với /metrics
+# Lab 2 test signature
 import os
 import random
 from flask import Flask, jsonify
